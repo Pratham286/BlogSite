@@ -28,18 +28,11 @@ const DetailedBlog = () => {
                       Authorization: `Bearer ${token}`
                     },
                   })
-                  // console.log(response.data);
+                  console.log(response.data.blogData._id);
                   setBlogDetails(response.data.blogData);
                   if(blogDetails)
                   {
-                    if(blogDetails.email === user.email)
-                    {
-                      setSameUser(true)
-                    }
-                  }
-                  if(blogDetails)
-                  {
-                    if(blogDetails.email === user.email)
+                    if(blogDetails.author.email === user.email)
                     {
                       setSameUser(true)
                     }
@@ -53,7 +46,7 @@ const DetailedBlog = () => {
             useEffect(()=>{
               if(blogDetails && user) 
               {
-                if(blogDetails.email === user.email)
+                if(blogDetails.author.email === user.email)
                 {
                   setSameUser(true)
                 }
@@ -117,7 +110,7 @@ const DetailedBlog = () => {
     // console.log(blogDetails.Date);
  return (
   blogDetails ? (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Box textAlign="center" mb={3}>
           <Typography variant="h4" component="h1" gutterBottom>
@@ -128,7 +121,7 @@ const DetailedBlog = () => {
 
         <Box display="flex" justifyContent="space-between" mb={2}>
           <Typography variant="subtitle1" color="textSecondary">
-            {blogDetails.name}
+            {blogDetails.author.name}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
             {(blogDetails.Date).toLocaleString()}

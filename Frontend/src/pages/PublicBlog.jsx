@@ -16,6 +16,8 @@ const PublicBlog = () => {
             Authorization: `Bearer ${token}`,
           }
         });
+        // console.log(response.data.blogData[0].author.name)
+        // console.log()
         setBlog(response.data.blogData);
         } catch (error) {
           console.log("Error: ", error);
@@ -29,12 +31,11 @@ const PublicBlog = () => {
       navigate(`/detail?id=${blogItem._id}`);
     }
   
-
   return (
     <Box  sx={{display: "flex", margin: "10px", flexDirection: "row", flexWrap: "wrap"}} >
       
       {blog.map((blogItem) =>(
-        <Blog onClick = {() => handleClick(blogItem)} key={blogItem._id} title={blogItem.title} author={blogItem.name}/>
+        <Blog onClick = {() => handleClick(blogItem)} key={blogItem._id} title={blogItem.title} author={blogItem.author.name}/>
       ))}
     </Box>
   )

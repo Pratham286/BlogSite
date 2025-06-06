@@ -8,7 +8,8 @@ import { useMyContext } from '../context/LoginContext';
 
 const UserBlog = () => {
   const {user} = useMyContext();
-  // console.log(user)
+
+  // console.log(user.id)
   const navigate = useNavigate();
   const [blog, setBlog] =useState([]);
   const token = localStorage.getItem('token')
@@ -20,7 +21,7 @@ const UserBlog = () => {
             Authorization: `Bearer ${token}`,
           },
           params:{
-            email: user.email,
+            id: user.id,
           },
         });
         // console.log(response.data.blogData);
@@ -43,7 +44,7 @@ const UserBlog = () => {
     <Box  sx={{display: "flex", margin: "10px", flexDirection: "row", flexWrap: "wrap"}} >
       
       {blog.map((blogItem) =>(
-        <Blog onClick = {() => handleClick(blogItem)} key={blogItem._id} title={blogItem.title} author={blogItem.name}/>
+        <Blog onClick = {() => handleClick(blogItem)} key={blogItem._id} title={blogItem.title} author={blogItem.author.name}/>
       ))}
     </Box>
       

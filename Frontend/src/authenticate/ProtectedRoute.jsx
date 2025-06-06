@@ -22,6 +22,7 @@ const ProtectedRoute = () => {
             },
           }
         );
+        // console.log(response.data.user)
         setUser(response.data.user)
         setIsValid(response.data.valid);
         setIsLogin(true);

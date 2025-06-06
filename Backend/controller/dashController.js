@@ -6,10 +6,12 @@ export const verifyUser = (req, res) => {
 
 export const getAllBlog = async (req, res) => {
     try {
-        const blog = await Blog.find({});
+        const blog = await Blog.find({}).populate("author", "name email");
+
         if(blog)
         {
             return res.status(200).json({message: "Blogs are accessed successfully!", blogData : blog})
+
         }
         else{
             return res.status(404).json({message:"Blog not found"});
@@ -20,10 +22,11 @@ export const getAllBlog = async (req, res) => {
     }
 }
 export const getUserBlog = async (req, res) => {
-    const {email} =req.query;
+    const {id} =req.query;
     // console.log(email);
     try {
-        const blog = await Blog.find({email : email});
+        const blog = await Blog.find({author : id}).populate("author", "name email");
+        // const blog = await Blog.find({email : email});
         if(blog)
         {
             return res.status(200).json({message: "Blogs are accessed successfully!", blogData : blog})
@@ -39,30 +42,30 @@ export const getUserBlog = async (req, res) => {
 export const getBlog = async (req, res) => {
     const id = req.params.id;
     try {
-        const blog = await Blog.findById(id);
+        const blog = await Blog.findById(id).populate("author", "name email");
         if(blog)
-        {
-            return res.status(200).json({message: "Blog found", blogData : blog})
+            {
+                return res.status(200).json({message: "Blog found", blogData : blog})
+            }
+            else{
+                return res.status(404).json({message:"Blog not found"});
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({message: "Internal error"})
         }
-        else{
-            return res.status(404).json({message:"Blog not found"});
-        }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({message: "Internal error"})
-    }
 }
 export const createBlog = async (req, res) => {
     try {
         const {name, email, title, content} = req.body;
+        const userId = req.user.id;
         const date = new Date();
         // console.log(date.getDate())
         
         const newBlog = new Blog({
-            name: name,
-            email:email,
             title: title,
             content: content,
+            author: userId
         });
         await newBlog.save();
         return res.status(200).json({message: "Blog was added"})        
