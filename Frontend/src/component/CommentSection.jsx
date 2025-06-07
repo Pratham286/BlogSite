@@ -8,6 +8,7 @@ const CommentSection = ({commentData, setCommentData, createComment, setCreateCo
     const navigate = useNavigate();
   const [commentmsg, setCommentmsg] = useState("");
   const token = localStorage.getItem('token')
+  const [confirmDelComment, setConfirmDelComment] = useState(false);
   useEffect(() => {
     const getcomment = async () => {
       try {
@@ -29,9 +30,6 @@ const CommentSection = ({commentData, setCommentData, createComment, setCreateCo
   }, []);
 
   const handleComment = async (e) => {
-    //  console.log()
-    // e.prevent
-
     if (!commentmsg) {
       alert("Comment is empty!");
     } else {

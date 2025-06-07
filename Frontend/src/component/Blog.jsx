@@ -13,7 +13,12 @@ function Blog(props) {
 
         <Box display="flex" justifyContent="space-between" mb={1}>
           <Typography variant="subtitle1" color="text.secondary">
-            {props.author}
+            Author: {props.author}
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between" mb={1}>
+          <Typography variant="subtitle1" color="text.secondary">
+            Likes: {props.likes}
           </Typography>
         </Box>
       </Paper>

@@ -36,6 +36,7 @@ function Header(props) {
             <Button onClick={()=> {navigate("/Signup")}} color="inherit" >Signup</Button>
             <Button onClick={()=> {navigate("/login")}} color="inherit">Login</Button>
             </Box> : <Box>
+              <Button onClick={()=> {navigate("/profile")}} color="inherit">My Profile</Button>
               <Button onClick={()=> {handleClick()}} color="inherit">Logout</Button>
             </Box>
           }

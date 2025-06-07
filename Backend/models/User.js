@@ -15,7 +15,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
         // minLength: 6,
-    }
+    },
+    
+    likedBlog: [{
+        type: Schema.Types.ObjectId,
+        ref: "Blog",
+    }],
     
 }, {timestamps: true});
 

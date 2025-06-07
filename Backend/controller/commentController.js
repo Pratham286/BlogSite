@@ -36,7 +36,7 @@ export const getBlogComment = async (req, res) => {
 export const getUserComment = async (req, res) => {
     try {
         const userId = req.user.id;
-        const comment = await Comment.find({author: userId});
+        const comment = await Comment.find({author: userId}).populate("author", "name email").populate("blogname", "title content");
         if(comment)
         {
             return res.status(200).json({message: "Success", commentData: comment});

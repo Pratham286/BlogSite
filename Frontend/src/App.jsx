@@ -11,6 +11,9 @@ import CreateBlog from "./pages/CreateBlog";
 import UserBlog from "./pages/UserBlog";
 import PublicBlog from "./pages/PublicBlog";
 import DetailedBlog from "./pages/DetailedBlog";
+import Profile from "./pages/Profile";
+import UserComments from "./pages/UserComments";
+import LikedBlog from "./pages/LikedBlog";
 function App() {
   return (
     <Box>
@@ -25,7 +28,9 @@ function App() {
           <Route path="/myblog" element={<UserBlog/>} />
           <Route path="/blog" element={<PublicBlog/>} />
           <Route path="/detail" element={<DetailedBlog/>} />
-          
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/mycomments" element={<UserComments/>} />
+          <Route path="/mylikedBlog" element={<LikedBlog/>} />
         </Route>
       </Routes>
       <Footer />

@@ -14,7 +14,7 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
   const queryParams = new URLSearchParams(location.search);
   const blogId = queryParams.get("id");
 //   console.log(blogId)
-  const [isComment, setIsComment] = useState(true);
+  const [isComment, setIsComment] = useState(false);
   const [commentData, setCommentData] = useState([]);
 
   const [sameUser, setSameUser] = useState(false);
@@ -23,8 +23,70 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
   const [createComment, setCreateComment] = useState(false);
   const { user } = useMyContext();
   const token = localStorage.getItem('token')
+  const [sameCommenter, setSameCommenter] = useState(false);
+  // console.log(user.id);
+  const [liked, setLiked] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+  useEffect(()=>{
+    const checkLike = async()=>{
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/like/isliked/${blogId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          // console.log(response.data.isLiked);
+          setLiked(response.data.isLiked);
+    }
+    catch(error){
+      console.log("Error: ", error);
+    }
+  }
+  checkLike();
+}, [trigger]);
 
+  const handleLike = async () =>{
+
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/like/register/${blogId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log(response.data);
+      setTrigger(!trigger);
+      // setLiked(response.data.isLiked);
+    }
+    catch(error){
+      console.log("Error: ", error);
+    }
+  }
+  const handleUnlike = async () =>{
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/like/deregister/${blogId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log(response.data);
+      setTrigger(!trigger);
+      // setLiked(response.data.isLiked);
+    }
+    catch(error){
+    console.log("Error: ", error);
+    }
+  }
   useEffect(() => {
+    // console.log(user)
     const getBlog = async () => {
       try {
         const response = await axios.get(
@@ -35,6 +97,7 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
             },
           }
         );
+        // console.log(response.data.blogData)
         setBlogDetails(response.data.blogData);
         if (blogDetails) {
           if (blogDetails.author.email === user.email) {
@@ -46,14 +109,16 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
       }
     };
     getBlog();
-  }, []);
+  }, [trigger]);
   useEffect(() => {
     if (blogDetails && user) {
       if (blogDetails.author.email === user.email) {
         setSameUser(true);
       }
+      
     }
   }, [user, blogDetails]);
+  // console.log(commentData)
   return (
     blogDetails ? (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
@@ -69,6 +134,9 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
           <Typography variant="subtitle1" color="textSecondary">
             {blogDetails.author.name}
           </Typography>
+          <Typography variant="subtitle1" color="textSecondary">
+            Likes: {blogDetails.likedUser.length}
+          </Typography>
           <Typography variant="subtitle2" color="textSecondary">
             {blogDetails.Date.toLocaleString()}
           </Typography>
@@ -80,6 +148,14 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
           <Typography variant="body1" lineHeight={1.8}>
             {blogDetails.content}
           </Typography>
+        </Box>
+        <Box>
+          {liked ? (<Box>
+            <Button onClick={handleUnlike}>Unlike</Button>
+          </Box>) : (<Box>
+            <Button onClick={handleLike}>Like</Button>
+          </Box>)}
+          {/* <Button onClick={handleLike}>Like</Button> */}
         </Box>
         {sameUser && (
           <Box>
@@ -122,6 +198,8 @@ const DetailedBlogCard = ({blogDetails, setBlogDetails}) => {
                   key={com._id}
                   message={com.message}
                   author={com.author.name}
+                  // comUserId={com.author._id}
+                  comDetails={com}
                 />
               ))}
             </Box>

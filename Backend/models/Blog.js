@@ -30,8 +30,11 @@ const blogSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
-    }
-    
+    },
+    likedUser:[ {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }]
 }, {timestamps: true});
 
 export const Blog = model("Blog", blogSchema);

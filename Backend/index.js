@@ -5,6 +5,8 @@ import connectToDB from "./config/db.js";
 import authRoutes from "./routes/auth.js"
 import dashboardRoutes from "./routes/dashboard.js"
 import commentRoutes from "./routes/commentOpertion.js"
+import likeRoutes from "./routes/like.js"
+import viewRoutes from "./routes/view.js"
 
 const app = express();
 dotenv.config();
@@ -19,6 +21,8 @@ app.use(cors());
 app.use("/auth", authRoutes)
 app.use("/dashboard", dashboardRoutes)
 app.use("/comment", commentRoutes)
+app.use("/like", likeRoutes)
+app.use("/view", viewRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
