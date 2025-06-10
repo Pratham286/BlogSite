@@ -59,6 +59,7 @@ const LoadingContainer = styled(Box)({
 });
 
 const UserBlog = () => {
+  const {url} = useMyContext();
   const {user} = useMyContext();
   const navigate = useNavigate();
   const [blog, setBlog] = useState([]);
@@ -70,7 +71,7 @@ const UserBlog = () => {
     const fetchBlog = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3000/dashboard/getUser", {
+        const response = await axios.get(`${url}/dashboard/getUser`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

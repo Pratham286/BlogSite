@@ -187,7 +187,7 @@ const FormBox = styled(Box)(({ theme }) => ({
 }));
 
 const CreateBlog = () => {
-  const { user } = useMyContext();
+  const { user, url } = useMyContext();
   const navigate = useNavigate();
   const token = localStorage.getItem('token')
   const [formInfo, setformInfo] = useState({
@@ -225,7 +225,7 @@ const CreateBlog = () => {
       };
       try {
         const response = await axios.post(
-          "http://localhost:3000/dashboard/create",
+          `${url}/dashboard/create`,
           blogInfo,
           {
             headers: {

@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, s
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/LoginContext";
 
 // Styled Components to match your CSS theme
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -178,6 +179,7 @@ const EditButton = styled(Button)(({ theme }) => ({
 const EditBlog = ({confirmEdit, setConfirmEdit, blogDetails}) => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token')
+    const {url} = useMyContext();
   const [editData, setEditData] = useState({
     title: "",
     content: "",
@@ -199,7 +201,7 @@ const EditBlog = ({confirmEdit, setConfirmEdit, blogDetails}) => {
       console.log(contentData);
       try {
         const response = await axios.put(
-          `http://localhost:3000/dashboard/edit/${blogDetails._id}`,
+          `${url}/dashboard/edit/${blogDetails._id}`,
           {
             newTitle: titleData,
             newContent: contentData,

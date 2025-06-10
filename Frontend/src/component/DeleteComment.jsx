@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import axios from 'axios';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useMyContext } from '../context/LoginContext';
 
 // Styled Components to match your CSS theme
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -131,6 +132,7 @@ const DeleteButton = styled(Button)(({ theme }) => ({
 }));
 
 const DeleteComment = ({confirmDelComment, setConfirmDelComment, commentDetails}) => {
+    const {url} = useMyContext();
     const navigate = useNavigate();
     const token = localStorage.getItem('token')
       
@@ -139,7 +141,7 @@ const DeleteComment = ({confirmDelComment, setConfirmDelComment, commentDetails}
 
     try {
       const response = await axios.delete(
-        `http://localhost:3000/comment/delete/${commentDetails._id}`,
+        `${url}/comment/delete/${commentDetails._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

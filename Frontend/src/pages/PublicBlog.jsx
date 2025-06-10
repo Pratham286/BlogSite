@@ -4,6 +4,7 @@ import Blog from '../component/Blog';
 import { Box, Typography, CircularProgress, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { useMyContext } from '../context/LoginContext';
 
 const PageContainer = styled(Container)({
   minHeight: '100vh',
@@ -57,6 +58,7 @@ const LoadingContainer = styled(Box)({
 });
 
 const PublicBlog = () => {
+  const {url} = useMyContext();
   const navigate = useNavigate();
   const [blog, setBlog] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,7 +69,7 @@ const PublicBlog = () => {
     const fetchBlog = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3000/dashboard/getAll", {
+        const response = await axios.get(`${url}/dashboard/getAll`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

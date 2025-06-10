@@ -2,6 +2,7 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, s
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/LoginContext";
 
 // Styled Components to match your CSS theme
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -167,12 +168,13 @@ const CommentSection = ({commentData, setCommentData, createComment, setCreateCo
   const [commentmsg, setCommentmsg] = useState("");
   const token = localStorage.getItem('token')
   const [confirmDelComment, setConfirmDelComment] = useState(false);
+  const {url} = useMyContext();
 
   useEffect(() => {
     const getcomment = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/comment/getcomment/${blogId}`,
+          `${url}/comment/getcomment/${blogId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -193,7 +195,7 @@ const CommentSection = ({commentData, setCommentData, createComment, setCreateCo
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:3000/comment/create",
+          `${url}/comment/create`,
           {
             message: commentmsg,
             blogId: blogId,

@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/LoginContext";
 
 // Styled Components to match your CSS theme
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -188,6 +189,7 @@ const EditComment = ({
   const commentId = commentDetails._id
   // console.log(commentId);
   const navigate = useNavigate();
+  const {url} = useMyContext();
   const token = localStorage.getItem("token");
 
   const [commentmsg, setCommentmsg] = useState("");
@@ -198,7 +200,7 @@ const EditComment = ({
     } else {
       try {
         const response = await axios.put(
-          `http://localhost:3000/comment/update/${commentId}`,
+          `${url}/comment/update/${commentId}`,
           {
             newMessage: commentmsg,
           },

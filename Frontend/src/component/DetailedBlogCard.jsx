@@ -41,7 +41,7 @@ const DetailedBlogCard = ({ blogDetails, setBlogDetails }) => {
   const [confirmDel, setConfirmDel] = useState(false);
   const [confirmEdit, setConfirmEdit] = useState(false);
   const [createComment, setCreateComment] = useState(false);
-  const { user } = useMyContext();
+  const { user, url } = useMyContext();
   const token = localStorage.getItem("token");
   const [sameCommenter, setSameCommenter] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -52,7 +52,7 @@ const DetailedBlogCard = ({ blogDetails, setBlogDetails }) => {
     const checkLike = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/like/isliked/${blogId}`,
+          `${url}/like/isliked/${blogId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ const DetailedBlogCard = ({ blogDetails, setBlogDetails }) => {
   const handleLike = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/like/register/${blogId}`,
+        `${url}/like/register/${blogId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ const DetailedBlogCard = ({ blogDetails, setBlogDetails }) => {
   const handleUnlike = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/like/deregister/${blogId}`,
+        `${url}/like/deregister/${blogId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const DetailedBlogCard = ({ blogDetails, setBlogDetails }) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/dashboard/blog/${blogId}`,
+          `${url}/dashboard/blog/${blogId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

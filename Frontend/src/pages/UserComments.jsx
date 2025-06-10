@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import { Box, Typography, styled, Avatar, Divider, Chip, CircularProgress } from '@mui/material';
+import { useMyContext } from '../context/LoginContext';
 
 // Styled Components
 const Container = styled(Box)(({ theme }) => ({
@@ -169,6 +170,7 @@ const getInitials = (title) => {
 };
 
 const UserComments = () => {
+  const {url} = useMyContext();
   const token = localStorage.getItem("token")
   const [commentData, setCommentData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -178,7 +180,7 @@ const UserComments = () => {
     const fetchComments = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3000/comment/getusercomment", {
+        const response = await axios.get(`${url}/comment/getusercomment`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/LoginContext";
 
 // Dark theme matching your CSS
 const darkTheme = createTheme({
@@ -107,6 +108,7 @@ const darkTheme = createTheme({
 
 export default function Signup() {
   const navigate = useNavigate();
+  const {url} = useMyContext();
   const [formInfo, setFormInfo] = useState({
     name: "",
     email: "",
@@ -147,7 +149,7 @@ export default function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/signup",
+        `${url}/auth/signup`,
         formInfo
       );
       

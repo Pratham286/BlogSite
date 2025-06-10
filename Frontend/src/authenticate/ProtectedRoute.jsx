@@ -5,7 +5,7 @@ import Login from "../pages/Login";
 import { useMyContext } from "../context/LoginContext";
 
 const ProtectedRoute = () => {
-  const { isLogin, setIsLogin } = useMyContext();
+  const { isLogin, setIsLogin, url} = useMyContext();
   const { user, setUser } = useMyContext();
   const token = localStorage.getItem("token");
   const [isValid, setIsValid] = useState(null);
@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/dashboard/verify",
+          `${url}/dashboard/verify`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
