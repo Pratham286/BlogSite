@@ -14,9 +14,11 @@ import DetailedBlog from "./pages/DetailedBlog";
 import Profile from "./pages/Profile";
 import UserComments from "./pages/UserComments";
 import LikedBlog from "./pages/LikedBlog";
+import BgImg from "./assets/BgImg.jpg"
 function App() {
   return (
-    <Box>
+    <Box sx={{width: "100%", 
+    }} >
       <Header/>
       <Routes>
         <Route path="/" element={<Home />} />

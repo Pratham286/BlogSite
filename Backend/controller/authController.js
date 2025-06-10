@@ -28,7 +28,14 @@ export const signupFuntion = async (req, res) => {
 export const loginFunction = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate({
+      path: "likedBlog",
+      select: "title author Date content",
+      populate: {
+        path: "author",
+        select: "name email", // Add fields from User schema you want to populate
+      },
+    });
     if (!user) {
       return res.status(404).json({ message: "Email is not registered!" });
     }

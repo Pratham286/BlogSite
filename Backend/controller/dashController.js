@@ -5,10 +5,10 @@ export const verifyUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate({
       path: "likedBlog",
-      select: "title author Date content",
+      select: "title author Date content likedUser",
       populate: {
         path: "author",
-        select: "name email", // Add fields from User schema you want to populate
+        select: "name email", 
       },
     });
     if (!user) {
